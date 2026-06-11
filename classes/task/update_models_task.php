@@ -20,7 +20,7 @@ namespace aiprovider_pollinations\task;
  * Scheduled task to update the cached Pollinations model list.
  *
  * @package    aiprovider_pollinations
- * @copyright  2025 Krissy Painter
+ * @copyright  2026 Krissy Painter
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class update_models_task extends \core\task\scheduled_task {

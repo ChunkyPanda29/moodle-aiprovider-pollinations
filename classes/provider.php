@@ -29,7 +29,7 @@ use core\http_client;
  * Class provider.
  *
  * @package    aiprovider_pollinations
- * @copyright  2025 Krissy Painter
+ * @copyright  2026 Krissy Painter
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider extends \core_ai\provider {
@@ -233,7 +233,16 @@ class provider extends \core_ai\provider {
                 $title = $model['title'] ?? $name;
                 $inputs = implode(', ', $model['input_modalities'] ?? ['text']);
                 $outputs = implode(', ', $model['output_modalities'] ?? ['text']);
-                $display = "{$title} ({$brand}) — {$inputs} → {$outputs}";
+                $capabilities = implode(', ', $model['capabilities'] ?? []);
+                $pricing = $model['pricing'] ?? [];
+                $pollensymbol = '🌸';
+                $costinfo = '';
+                if (!empty($pricing['completionTextTokens'])) {
+                    $costper1k = round((float) $pricing['completionTextTokens'] * 1000000, 2);
+                    $costinfo = " [{$pollensymbol}{$costper1k}/1M tokens]";
+                }
+                $paidonly = !empty($model['paid_only']) ? ' 💎' : '';
+                $display = "{$title} ({$brand}) — {$inputs} → {$outputs}{$costinfo}{$paidonly}";
                 $selectmodels[$name] = $display;
             }
 

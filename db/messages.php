@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Scheduled tasks for aiprovider_pollinations.
+ * Message providers for aiprovider_pollinations.
  *
  * @package    aiprovider_pollinations
  * @copyright  2026 Krissy Painter
@@ -24,23 +24,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$tasks = [
-    [
-        'classname' => 'aiprovider_pollinations\\task\\update_models_task',
-        'blocking' => 0,
-        'minute' => '0',
-        'hour' => '3',
-        'day' => '*',
-        'month' => '*',
-        'dayofweek' => '*',
-    ],
-    [
-        'classname' => 'aiprovider_pollinations\\task\\check_balance_task',
-        'blocking' => 0,
-        'minute' => '30',
-        'hour' => '9',
-        'day' => '*',
-        'month' => '*',
-        'dayofweek' => '*',
+$messageproviders = [
+    // Low pollen balance notification.
+    'lowbalance' => [
+        'defaults' => [
+            'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN,
+            'email' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDOFF,
+        ],
+        'capability' => 'moodle/site:config',
     ],
 ];

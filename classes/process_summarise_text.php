@@ -23,7 +23,7 @@ use Psr\Http\Message\UriInterface;
  * Class process text summarisation.
  *
  * @package    aiprovider_pollinations
- * @copyright  2025 Krissy Painter
+ * @copyright  2026 Krissy Painter
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class process_summarise_text extends process_generate_text {

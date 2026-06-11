@@ -29,7 +29,7 @@ use Psr\Http\Message\UriInterface;
  * Abstract processor for Pollinations AI actions.
  *
  * @package    aiprovider_pollinations
- * @copyright  2025 Krissy Painter
+ * @copyright  2026 Krissy Painter
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class abstract_processor extends process_base {

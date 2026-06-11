@@ -18,7 +18,7 @@
  * Strings for component 'aiprovider_pollinations', language 'en'.
  *
  * @package    aiprovider_pollinations
- * @copyright  2025 Krissy Painter
+ * @copyright  2026 Krissy Painter
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
