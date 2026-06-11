@@ -41,7 +41,14 @@ if ($hassiteconfig) {
         '',
     ));
 
-    // API key setting.
+    // BYOP connection heading.
+    $settings->add(new admin_setting_heading(
+        'aiprovider_pollinations/byop_heading',
+        new lang_string('byop_heading', 'aiprovider_pollinations'),
+        '',
+    ));
+
+    // Manual API key fallback (hidden by default, still usable for developers/testing).
     $settings->add(new admin_setting_configpasswordunmask(
         'aiprovider_pollinations/apikey',
         new lang_string('apikey', 'aiprovider_pollinations'),
@@ -49,7 +56,7 @@ if ($hassiteconfig) {
         '',
     ));
 
-    // BYOP app key setting (optional).
+    // BYOP app key override (optional — defaults to hardcoded value).
     $settings->add(new admin_setting_configtext(
         'aiprovider_pollinations/appkey',
         new lang_string('appkey', 'aiprovider_pollinations'),
@@ -58,7 +65,36 @@ if ($hassiteconfig) {
         PARAM_ALPHANUMEXT,
     ));
 
+    // BYOP connect UI placeholder — the AMD module targets this container.
+    $byopplaceholder = \html_writer::div(
+        '',
+        '',
+        ['id' => 'aiprovider_pollinations_byop_container']
+    );
+    $settings->add(new admin_setting_description(
+        'aiprovider_pollinations/byop_connect_ui',
+        new lang_string('byop_connect', 'aiprovider_pollinations'),
+        $byopplaceholder,
+    ));
+
+    // Load the BYOP AMD module.
+    $settings->add(new admin_setting_description(
+        'aiprovider_pollinations/byop_amd_loader',
+        '',
+        '<script>
+        require(["aiprovider_pollinations/byop_connect"], function(module) {
+            module.init();
+        });
+        </script>',
+    ));
+
     // Global rate limiting.
+    $settings->add(new admin_setting_heading(
+        'aiprovider_pollinations/ratelimit',
+        new lang_string('settings', 'core'),
+        '',
+    ));
+
     $settings->add(new admin_setting_configcheckbox(
         'aiprovider_pollinations/enableglobalratelimit',
         new lang_string('enableglobalratelimit', 'aiprovider_pollinations'),

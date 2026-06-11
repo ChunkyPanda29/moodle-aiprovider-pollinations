@@ -27,9 +27,24 @@ $string['pluginname'] = 'Pollinations AI provider';
 
 // API settings.
 $string['apikey'] = 'Pollinations API key';
-$string['apikey_desc'] = 'Your Pollinations secret key (sk_...) or publishable key (pk_...). Get one from <a href="https://pollinations.ai">Pollinations.ai</a>.';
-$string['appkey'] = 'BYOP app key (optional)';
-$string['appkey_desc'] = 'Your publishable app key (pk_...) for Bring Your Own Pollen (BYOP) integration. When set, users pay 25% over base rates and you earn 25% markup. Create one at <a href="https://enter.pollinations.ai">enter.pollinations.ai</a> with earningsEnabled enabled.';
+$string['apikey_desc'] = 'Your Pollinations secret key (sk_...). This is set automatically via the Connect to Pollinations flow above, but can also be entered manually for testing.';
+$string['appkey'] = 'BYOP app key override (optional)';
+$string['appkey_desc'] = 'Leave empty to use the default BYOP app key. Override only if you have your own Pollinations developer app key (pk_...).';
+
+// BYOP device flow.
+$string['byop_heading'] = 'Pollinations Connection';
+$string['byop_connect'] = 'Connect to Pollinations';
+$string['byop_connect_desc'] = 'Click to authorize your Moodle site with Pollinations. You will need a Pollinations account.';
+$string['byop_connected'] = 'Connected as {$a}';
+$string['byop_disconnected'] = 'Not connected';
+$string['byop_disconnect'] = 'Disconnect';
+$string['byop_code_instructions'] = 'Go to {$a->url} and enter code: {$a->code}';
+$string['byop_polling'] = 'Waiting for authorization...';
+$string['byop_balance'] = 'Balance: {$a} pollen';
+$string['byop_error_init'] = 'Failed to start authorization. Please try again.';
+$string['byop_error_poll'] = 'Authorization check failed. Please try again.';
+$string['byop_error_denied'] = 'Authorization was denied.';
+$string['byop_success'] = 'Successfully connected to Pollinations!';
 
 // Rate limiting.
 $string['enableglobalratelimit'] = 'Set site-wide rate limit';

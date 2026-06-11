@@ -33,10 +33,19 @@ use core\http_client;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider extends \core_ai\provider {
-    /** @var string The Pollinations API key. */
+    /**
+     * Default BYOP publishable app key.
+     *
+     * This key is safe to ship in client-side code. It identifies this plugin
+     * for the Pollinations BYOP (Bring Your Own Pollen) device flow and
+     * earns the developer a 25% markup on all API usage.
+     */
+    public const DEFAULT_APP_KEY = 'pk_JpcODXmxY8ORHqe6';
+
+    /** @var string The Pollinations API key (sk_... obtained via BYOP or manual entry). */
     private string $apikey;
 
-    /** @var string The BYOP publishable app key (optional). */
+    /** @var string The BYOP publishable app key. */
     private string $appkey;
 
     /** @var bool Is global rate limiting for the API enabled. */
@@ -49,10 +58,20 @@ class provider extends \core_ai\provider {
      * Class constructor.
      */
     public function __construct() {
-        $this->apikey = get_config('aiprovider_pollinations', 'apikey');
-        $this->appkey = get_config('aiprovider_pollinations', 'appkey') ?? '';
-        $this->enableglobalratelimit = get_config('aiprovider_pollinations', 'enableglobalratelimit');
-        $this->globalratelimit = get_config('aiprovider_pollinations', 'globalratelimit');
+        $this->apikey = get_config('aiprovider_pollinations', 'apikey') ?? '';
+        $appkey = get_config('aiprovider_pollinations', 'appkey');
+        $this->appkey = !empty($appkey) ? $appkey : self::DEFAULT_APP_KEY;
+        $this->enableglobalratelimit = (bool) get_config('aiprovider_pollinations', 'enableglobalratelimit');
+        $this->globalratelimit = (int) get_config('aiprovider_pollinations', 'globalratelimit');
+    }
+
+    /**
+     * Get the BYOP publishable app key.
+     *
+     * @return string The app key (pk_...).
+     */
+    public function get_app_key(): string {
+        return $this->appkey;
     }
 
     /**
