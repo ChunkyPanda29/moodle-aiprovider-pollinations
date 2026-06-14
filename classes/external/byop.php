@@ -34,9 +34,7 @@ use GuzzleHttp\Psr7\Request;
  * @copyright  2026 Krissy Painter
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class byop extends external_api {
-
-    /**
+class byop extends external_api {\n    /**
      * Returns the BYOP publishable app key, checking for an override in config.
      *
      * @return string
@@ -301,16 +299,16 @@ class byop extends external_api {
 
         // Fetch user info.
         try {
-            $userinfoRequest = new Request(
+            $userinforequest = new Request(
                 method: 'GET',
                 uri: 'https://enter.pollinations.ai/api/device/userinfo',
                 headers: [
                     'Authorization' => 'Bearer ' . $apikey,
                 ],
             );
-            $userinfoResponse = $client->send($userinfoRequest);
-            if ($userinfoResponse->getStatusCode() === 200) {
-                $userinfo = json_decode($userinfoResponse->getBody()->getContents(), true);
+            $userinforesponse = $client->send($userinforequest);
+            if ($userinforesponse->getStatusCode() === 200) {
+                $userinfo = json_decode($userinforesponse->getBody()->getContents(), true);
                 if (is_array($userinfo)) {
                     $result['username'] = $userinfo['preferred_username']
                         ?? $userinfo['name']
@@ -319,21 +317,21 @@ class byop extends external_api {
                 }
             }
         } catch (\Exception $e) {
-            // Non-critical — continue without user info.
+            debugging('Failed to fetch Pollinations user info: ' . $e->getMessage(), DEBUG_DEVELOPER);
         }
 
         // Fetch balance.
         try {
-            $balanceRequest = new Request(
+            $balancerequest = new Request(
                 method: 'GET',
                 uri: 'https://gen.pollinations.ai/account/balance',
                 headers: [
                     'Authorization' => 'Bearer ' . $apikey,
                 ],
             );
-            $balanceResponse = $client->send($balanceRequest);
-            if ($balanceResponse->getStatusCode() === 200) {
-                $balancedata = json_decode($balanceResponse->getBody()->getContents(), true);
+            $balanceresponse = $client->send($balancerequest);
+            if ($balanceresponse->getStatusCode() === 200) {
+                $balancedata = json_decode($balanceresponse->getBody()->getContents(), true);
                 if (is_array($balancedata)) {
                     $total = $balancedata['total']
                         ?? ($balancedata['tier_balance'] ?? 0) + ($balancedata['paid_balance'] ?? 0);
@@ -343,7 +341,8 @@ class byop extends external_api {
                 }
             }
         } catch (\Exception $e) {
-            // Non-critical — continue without balance.
+            // Non-critical - continue without balance.
+            debugging('Failed to fetch Pollinations balance: ' . $e->getMessage(), DEBUG_DEVELOPER);
         }
 
         return $result;

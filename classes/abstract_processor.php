@@ -87,6 +87,13 @@ abstract class abstract_processor extends process_base {
         return null;
     }
 
+    /**
+     * Query the Pollinations API.
+     *
+     * Sends the request to the Pollinations API and handles the response.
+     *
+     * @return array The response array.
+     */
     #[\ReturnTypeWillChange]
     protected function query_ai_api(): array {
         $request = $this->create_request_object(

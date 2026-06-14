@@ -135,10 +135,10 @@ class provider extends \core_ai\provider {
         // Check the user rate limit.
         if ($this->enableuserratelimit) {
             if (!$ratelimiter->check_user_rate_limit(
-                component: $component,
-                ratelimit: $this->userratelimit,
-                userid: $action->get_configuration('userid'),
-            )) {
+                    component: $component,
+                    ratelimit: $this->userratelimit,
+                    userid: $action->get_configuration('userid'),
+                )) {
                 return [
                     'success' => false,
                     'errorcode' => 429,
@@ -150,9 +150,9 @@ class provider extends \core_ai\provider {
         // Check the global rate limit.
         if ($this->enableglobalratelimit) {
             if (!$ratelimiter->check_global_rate_limit(
-                component: $component,
-                ratelimit: $this->globalratelimit,
-            )) {
+                    component: $component,
+                    ratelimit: $this->globalratelimit,
+                )) {
                 return [
                     'success' => false,
                     'errorcode' => 429,
