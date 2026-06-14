@@ -125,10 +125,24 @@ if ($hassiteconfig) {
     ));
 
     $settings->add(new admin_setting_configcheckbox(
-        'aiprovider_pollinations/enablesafety',
-        new lang_string('enablesafety', 'aiprovider_pollinations'),
-        new lang_string('enablesafety_desc', 'aiprovider_pollinations'),
+        'aiprovider_pollinations/safety_privacy',
+        new lang_string('safety_privacy', 'aiprovider_pollinations'),
+        new lang_string('safety_privacy_desc', 'aiprovider_pollinations'),
         1,
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'aiprovider_pollinations/safety_secrets',
+        new lang_string('safety_secrets', 'aiprovider_pollinations'),
+        new lang_string('safety_secrets_desc', 'aiprovider_pollinations'),
+        1,
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'aiprovider_pollinations/safety_nsfw',
+        new lang_string('safety_nsfw', 'aiprovider_pollinations'),
+        new lang_string('safety_nsfw_desc', 'aiprovider_pollinations'),
+        0,
     ));
 
     // Account & balance section.

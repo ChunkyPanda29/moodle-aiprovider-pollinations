@@ -56,9 +56,13 @@ $string['userratelimit'] = 'Maximum number of requests per user';
 $string['userratelimit_desc'] = 'The number of requests each user is allowed per hour.';
 
 // Safety settings.
-$string['enablesafety'] = 'Enable content safety filtering';
-$string['enablesafety_desc'] = 'When enabled, personal information (names, emails, phone numbers, addresses, IPs) and secrets (API keys, passwords, tokens) are automatically redacted before being sent to the AI model.';
 $string['safety_heading'] = 'Content safety';
+$string['safety_nsfw'] = 'Block mature content (sexual & violent)';
+$string['safety_nsfw_desc'] = 'Block requests and responses containing sexual or violent content.';
+$string['safety_privacy'] = 'Redact personal information (privacy)';
+$string['safety_privacy_desc'] = 'Automatically redact names, emails, phone numbers, addresses, IPs, URLs, and usernames before sending to the AI model.';
+$string['safety_secrets'] = 'Redact secrets';
+$string['safety_secrets_desc'] = 'Automatically redact API keys, passwords, and tokens before sending to the AI model.';
 
 // Action: generate_image.
 $string['action:generate_image:model'] = 'Image model';

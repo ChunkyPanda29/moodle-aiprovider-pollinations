@@ -131,10 +131,19 @@ class process_generate_image extends abstract_processor {
             $params['seed'] = (int) $seed;
         }
 
-        // Add safety setting if enabled.
-        $safety = get_config('aiprovider_pollinations', 'enablesafety');
-        if (!empty($safety)) {
-            $params['safe'] = 'privacy,secrets';
+        // Add safety filters if any are enabled.
+        $safetyfilters = [];
+        if ((bool) get_config('aiprovider_pollinations', 'safety_privacy')) {
+            $safetyfilters[] = 'privacy';
+        }
+        if ((bool) get_config('aiprovider_pollinations', 'safety_secrets')) {
+            $safetyfilters[] = 'secrets';
+        }
+        if ((bool) get_config('aiprovider_pollinations', 'safety_nsfw')) {
+            $safetyfilters[] = 'sexual,violence';
+        }
+        if (!empty($safetyfilters)) {
+            $params['safe'] = implode(',', $safetyfilters);
         }
 
         $querystring = http_build_query($params);

@@ -80,9 +80,18 @@ abstract class abstract_processor extends process_base {
      * @return string|null The safety value or null if disabled.
      */
     protected function get_safety_header(): ?string {
-        $enabled = (bool) get_config('aiprovider_pollinations', 'enablesafety');
-        if ($enabled) {
-            return 'privacy,secrets';
+        $filters = [];
+        if ((bool) get_config('aiprovider_pollinations', 'safety_privacy')) {
+            $filters[] = 'privacy';
+        }
+        if ((bool) get_config('aiprovider_pollinations', 'safety_secrets')) {
+            $filters[] = 'secrets';
+        }
+        if ((bool) get_config('aiprovider_pollinations', 'safety_nsfw')) {
+            $filters[] = 'sexual,violence';
+        }
+        if (!empty($filters)) {
+            return implode(',', $filters);
         }
         return null;
     }
