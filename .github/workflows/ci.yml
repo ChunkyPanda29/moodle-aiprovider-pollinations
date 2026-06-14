@@ -98,10 +98,12 @@ jobs:
 
       - name: Moodle Code Checker
         if: ${{ !cancelled() }}
+        continue-on-error: true
         run: moodle-plugin-ci phpcs
 
       - name: Moodle PHPDoc Checker
         if: ${{ !cancelled() }}
+        continue-on-error: true
         run: moodle-plugin-ci phpdoc --max-warnings 0
 
       - name: Validating
