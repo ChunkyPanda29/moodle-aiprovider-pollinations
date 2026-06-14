@@ -20,16 +20,20 @@ use core_external\external_api;
 use core_external\external_function_parameters;
 use core_external\external_single_structure;
 use core_external\external_value;
+use core\http_client;
+use GuzzleHttp\Psr7\Request;
 
 /**
- * External API class for BYOP connection management.
+ * External API class for BYOP device flow integration.
  *
- * Uses the Pollinations Redirect Flow (web app flow):
- * 1. Admin clicks "Connect to Pollinations"
- * 2. Popup opens to enter.pollinations.ai/authorize
- * 3. User authorizes on Pollinations
- * 4. Popup redirects back to Moodle with #api_key=sk_...
- * 5. JavaScript saves the key via this API
+ * Uses the Pollinations Device Flow:
+ * 1. Admin clicks "Connect" → plugin requests a device code
+ * 2. Admin opens enter.pollinations.ai/device and enters the code
+ * 3. Plugin polls until the user authorizes
+ * 4. Pollinations returns a scoped user key (sk_...)
+ *
+ * The device flow is domain-independent — no redirect URI registration needed.
+ * This is essential for a plugin distributed to thousands of different Moodle sites.
  *
  * @package    aiprovider_pollinations
  * @copyright  2026 Krissy Painter
@@ -37,52 +41,195 @@ use core_external\external_value;
  */
 class byop extends external_api {
     /**
-     * Save the API key obtained from the BYOP redirect flow.
-     *
-     * @param string $apikey The API key (sk_...) returned by Pollinations.
-     * @return array
+     * The BYOP publishable app key.
      */
-    public static function save_key(string $apikey): array {
+    const APP_KEY = 'pk_Jpc…Hqe6';
+
+    /**
+     * Initiate the BYOP device authorisation flow.
+     *
+     * Requests a device code from Pollinations. The user must visit
+     * the verification URI and enter the user_code to authorise.
+     *
+     * @return array Contains device_code, user_code, and verification_uri.
+     */
+    public static function init_device_flow(): array {
         require_sesskey();
 
-        $params = self::validate_parameters(self::save_key_parameters(), [
-            'apikey' => $apikey,
-        ]);
+        $request = new Request(
+            method: 'POST',
+            uri: 'https://enter.pollinations.ai/api/device/code',
+            headers: ['Content-Type' => 'application/json'],
+            body: json_encode([
+                'client_id' => self::APP_KEY,
+                'scope' => 'generate',
+            ]),
+        );
 
-        // Basic validation — must look like a Pollinations secret key.
-        if (!preg_match('/^sk_/', $params['apikey'])) {
+        $client = \core\di::get(http_client::class);
+
+        try {
+            $response = $client->send($request);
+            $body = json_decode($response->getBody()->getContents(), true);
+
+            if (!is_array($body) || !isset($body['device_code'])) {
+                return [
+                    'success' => false,
+                    'error' => 'Invalid response from Pollinations.',
+                ];
+            }
+
+            return [
+                'success' => true,
+                'device_code' => $body['device_code'],
+                'user_code' => $body['user_code'],
+                'verification_uri' => 'https://enter.pollinations.ai/device',
+            ];
+        } catch (\Exception $e) {
             return [
                 'success' => false,
-                'error' => 'Invalid API key format',
+                'error' => $e->getMessage(),
             ];
         }
-
-        set_config('apikey', $params['apikey'], 'aiprovider_pollinations');
-
-        return [
-            'success' => true,
-        ];
     }
 
     /**
-     * Parameters for save_key.
+     * Parameters for init_device_flow.
      *
      * @return external_function_parameters
      */
-    public static function save_key_parameters(): external_function_parameters {
-        return new external_function_parameters([
-            'apikey' => new external_value(PARAM_RAW, 'The Pollinations API key'),
+    public static function init_device_flow_parameters(): external_function_parameters {
+        return new external_function_parameters([]);
+    }
+
+    /**
+     * Return structure for init_device_flow.
+     *
+     * @return external_single_structure
+     */
+    public static function init_device_flow_returns(): external_single_structure {
+        return new external_single_structure([
+            'success' => new external_value(PARAM_BOOL, 'Whether the request was successful'),
+            'device_code' => new external_value(PARAM_RAW, 'Device code for polling', VALUE_OPTIONAL),
+            'user_code' => new external_value(PARAM_RAW, 'User code to display', VALUE_OPTIONAL),
+            'verification_uri' => new external_value(PARAM_URL, 'URI for user to visit', VALUE_OPTIONAL),
+            'error' => new external_value(PARAM_RAW, 'Error message', VALUE_OPTIONAL),
         ]);
     }
 
     /**
-     * Return structure for save_key.
+     * Poll for the BYOP device authorisation token.
+     *
+     * Returns authorization_pending while the user hasn't authorised yet.
+     * Returns the API key once the user completes authorisation.
+     *
+     * @param string $devicecode The device code from init_device_flow.
+     * @return array
+     */
+    public static function poll_device_token(string $devicecode): array {
+        require_sesskey();
+
+        $params = self::validate_parameters(self::poll_device_token_parameters(), [
+            'devicecode' => $devicecode,
+        ]);
+
+        $request = new Request(
+            method: 'POST',
+            uri: 'https://enter.pollinations.ai/api/device/token',
+            headers: ['Content-Type' => 'application/json'],
+            body: json_encode([
+                'device_code' => $params['devicecode'],
+            ]),
+        );
+
+        $client = \core\di::get(http_client::class);
+
+        try {
+            $response = $client->send($request);
+            $status = $response->getStatusCode();
+            $body = json_decode($response->getBody()->getContents(), true);
+
+            // Check for authorisation pending — this is NORMAL, not an error.
+            if ($status === 400 && isset($body['error']) && $body['error'] === 'authorization_pending') {
+                return [
+                    'success' => false,
+                    'pending' => true,
+                ];
+            }
+
+            // Check for other pending states.
+            if ($status === 400 && isset($body['error']) && $body['error'] === 'slow_down') {
+                return [
+                    'success' => false,
+                    'pending' => true,
+                ];
+            }
+
+            // Check for denied.
+            if (isset($body['error']) && $body['error'] === 'access_denied') {
+                return [
+                    'success' => false,
+                    'pending' => false,
+                    'error' => 'Authorization was denied.',
+                ];
+            }
+
+            // Check for expired.
+            if (isset($body['error']) && $body['error'] === 'expired_token') {
+                return [
+                    'success' => false,
+                    'pending' => false,
+                    'error' => 'The device code has expired. Please try again.',
+                ];
+            }
+
+            // Success — we got the access token.
+            if (isset($body['access_token'])) {
+                $apikey = $body['access_token'];
+                set_config('apikey', $apikey, 'aiprovider_pollinations');
+
+                return [
+                    'success' => true,
+                    'pending' => false,
+                ];
+            }
+
+            // Unknown response.
+            return [
+                'success' => false,
+                'pending' => false,
+                'error' => 'Unexpected response from Pollinations.',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'pending' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Parameters for poll_device_token.
+     *
+     * @return external_function_parameters
+     */
+    public static function poll_device_token_parameters(): external_function_parameters {
+        return new external_function_parameters([
+            'devicecode' => new external_value(PARAM_RAW, 'The device code to poll'),
+        ]);
+    }
+
+    /**
+     * Return structure for poll_device_token.
      *
      * @return external_single_structure
      */
-    public static function save_key_returns(): external_single_structure {
+    public static function poll_device_token_returns(): external_single_structure {
         return new external_single_structure([
-            'success' => new external_value(PARAM_BOOL, 'Whether the key was saved'),
+            'success' => new external_value(PARAM_BOOL, 'Whether authorisation completed'),
+            'pending' => new external_value(PARAM_BOOL, 'Whether authorisation is still pending', VALUE_OPTIONAL),
+            'error' => new external_value(PARAM_RAW, 'Error message', VALUE_OPTIONAL),
         ]);
     }
 
@@ -102,7 +249,6 @@ class byop extends external_api {
         ];
 
         if ($connected) {
-            // Try to fetch balance for a richer status display.
             $provider = new \aiprovider_pollinations\provider();
             $balance = $provider->fetch_balance();
             if ($balance !== null) {
