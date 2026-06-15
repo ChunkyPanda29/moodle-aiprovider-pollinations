@@ -6,7 +6,7 @@
 [![Moodle 4.5+](https://img.shields.io/badge/Moodle-4.5%2B-orange?style=flat-square&logo=moodle)](https://moodle.org/)
 [![PHP 8.0+](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square)](LICENSE)
-[![GitHub release](https://img.shields.io/badge/Release-1.1.0-brightgreen?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/releases)
+[![GitHub release](https://img.shields.io/badge/Release-1.2.0-brightgreen?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/releases)
 [![GitHub Issues](https://img.shields.io/github/issues/ChunkyPanda29/moodle_aiprovider_pollinations?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
 [![CI](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/actions/workflows/ci.yml)
 
@@ -175,6 +175,16 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE) for details.
 - **Issue tracker:** [https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
 
 ## Changelog
+
+### v1.2.0 (2026-06-15)
+- **Added:** Auto-retry with exponential backoff for transient failures (429, 5xx) — up to 3 attempts with jitter
+- **Added:** Honours `Retry-After` header for rate-limited responses
+- **Added:** User-friendly error messages for common HTTP errors (401, 402, 403, 429, 400, 5xx)
+- **Added:** Request timeouts (60s request, 15s connect) to prevent infinite hangs
+- **Added:** Theme compatibility shim (`theme_compat.js`) for themes missing `role="main"` DOM element
+- **Changed:** All error messages now use `get_string()` instead of hard-coded English text
+- **Changed:** Maturity set to STABLE for Moodle Plugins Directory submission
+- **Fixed:** Plugin ZIP packaging now uses forward slashes for Linux compatibility
 
 ### v1.1.0 (2026-06-14)
 - **Added:** Image generation support (`generate_image` action) via Pollinations image API

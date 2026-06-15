@@ -90,6 +90,6 @@ class check_balance_task extends \core\task\scheduled_task {
             message_send($eventdata);
         }
 
-        mtrace("Low balance notification sent to " . count($admins) . " admin(s).");
+        mtrace(get_string('task_balance_notified', 'aiprovider_pollinations', count($admins)));
     }
 }

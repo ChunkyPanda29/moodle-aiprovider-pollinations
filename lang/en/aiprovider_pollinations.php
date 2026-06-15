@@ -93,9 +93,20 @@ $string['account_tier_balance'] = 'Tier balance: {$a} pollen';
 
 // Error messages.
 $string['error_apirequest'] = 'Error communicating with the Pollinations API: {$a}';
+$string['error_authfailed'] = 'Authentication failed: The API key is invalid or expired. Please check the Pollinations API key in the provider settings.';
+$string['error_badrequest'] = 'Bad request: {$a}';
+$string['error_badrequest_default'] = 'Invalid request';
+$string['error_connection'] = 'Connection error: {$a}';
+$string['error_forbidden'] = 'Access forbidden: This model may require a paid plan. Check your Pollinations subscription.';
+$string['error_httpgeneric'] = 'HTTP {$a->status}: {$a->phrase}';
 $string['error_invalidresponse'] = 'Invalid response from Pollinations API.';
 $string['error_noapikey'] = 'Pollinations API key is not configured.';
+$string['error_paymentrequired'] = 'Payment required: Your Pollinations account has insufficient Pollen balance. Please top up at pollinations.ai.';
 $string['error_ratelimit'] = 'Rate limit exceeded.';
+$string['error_ratelimit_exceeded'] = 'Rate limit exceeded: Too many requests to Pollinations. Please try again in a moment.';
+$string['error_retryexhausted'] = '{$a->message} (failed after {$a->attempts} attempts)';
+$string['error_servererror'] = 'Pollinations server error (HTTP {$a->status}): {$a->phrase}';
+$string['error_unknown'] = 'Unknown error: request failed without a response.';
 $string['getallmodels_error'] = 'Unable to fetch models. Please check your API key.';
 
 // Privacy.
@@ -110,6 +121,7 @@ $string['task_balance_check_failed'] = 'Failed to check Pollinations balance: {$
 $string['task_balance_checked'] = 'Pollinations balance checked: {$a} pollen.';
 $string['task_balance_low_body'] = 'The Pollinations AI provider pollen balance has dropped to {$a} pollen. Please top up your account at https://pollinations.ai to avoid service disruption.';
 $string['task_balance_low_subject'] = 'Pollinations AI balance low: {$a} pollen remaining';
+$string['task_balance_notified'] = 'Low balance notification sent to {$a} admin(s).';
 $string['task_check_balance'] = 'Check Pollinations pollen balance';
 $string['task_models_update_failed'] = 'Failed to update Pollinations model list: {$a}';
 $string['task_models_updated'] = 'Pollinations {$a->type} models updated: {$a->count} models available.';

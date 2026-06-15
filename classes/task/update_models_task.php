@@ -43,7 +43,7 @@ class update_models_task extends \core\task\scheduled_task {
         $provider = new \aiprovider_pollinations\provider();
 
         if (!$provider->is_provider_configured()) {
-            mtrace('Pollinations API key not configured. Skipping model update.');
+            mtrace(get_string('error_noapikey', 'aiprovider_pollinations') . ' Skipping model update.');
             return;
         }
 
