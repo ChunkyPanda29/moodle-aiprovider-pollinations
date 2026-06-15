@@ -6,11 +6,11 @@
 [![Moodle 4.5+](https://img.shields.io/badge/Moodle-4.5%2B-orange?style=flat-square&logo=moodle)](https://moodle.org/)
 [![PHP 8.0+](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square)](LICENSE)
-[![GitHub release](https://img.shields.io/badge/Release-1.2.0-brightgreen?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/releases)
-[![GitHub Issues](https://img.shields.io/github/issues/ChunkyPanda29/moodle_aiprovider_pollinations?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
+[![GitHub release](https://img.shields.io/badge/Release-1.2.0-brightgreen?style=flat-square)](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/releases)
+[![GitHub Issues](https://img.shields.io/github/issues/ChunkyPanda29/moodle-aiprovider-pollinations?style=flat-square)](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/issues)
 
 > **A free, open-source AI provider plugin for Moodle LMS that connects to the [Pollinations](https://pollinations.ai) AI platform via the BYOP (Bring Your Own Pollinations) device flow. Supports text generation, text summarisation, and image generation with automatic model discovery, per-user rate limiting, content safety filters, and pollen balance monitoring.**
-[![CI](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/actions/workflows/ci.yml)
+[![CI](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/actions/workflows/ci.yml)
 
 A Moodle AI provider plugin that integrates [Pollinations.ai](https://pollinations.ai) — the affordable, multi-model AI inference platform — into Moodle 4.5+ (and later).
 
@@ -20,26 +20,33 @@ A Moodle AI provider plugin that integrates [Pollinations.ai](https://pollinatio
 
 | Not Connected | Connected |
 |---|---|
-| ![Settings - Not Connected](screenshots/settings-page-not-connected.png) | ![Settings - Connected](screenshots/settings-page-connected.png) |
+| ![Settings - Not Connected](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/settings-page-not-connected.png) | ![Settings - Connected](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/settings-page-connected.png) |
 
 ### BYOP Device Flow (Connect to Pollinations)
 
 <table>
 <tr>
-<td width="400" align="center"><img src="screenshots/byop-connect1.png?raw=true" width="400" alt="Step 1" /><br><strong>Step 1: Click Connect</strong></td>
-<td width="400" align="center"><img src="screenshots/byop-connect2.png?raw=true" width="400" alt="Step 2" /><br><strong>Step 2: Enter code</strong></td>
+<td width="400" align="center"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/byop-connect1.png" width="400" alt="Step 1" /><br><strong>Step 1: Click Connect</strong></td>
+<td width="400" align="center"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/byop-connect2.png" width="400" alt="Step 2" /><br><strong>Step 2: Enter code</strong></td>
 </tr>
 <tr>
-<td width="400" align="center"><img src="screenshots/byop-connect3.png?raw=true" width="400" alt="Step 3" /><br><strong>Step 3: Authorising…</strong></td>
-<td width="400" align="center"><img src="screenshots/byop-connect4.png?raw=true" width="400" alt="Step 4" /><br><strong>Step 4: Connected!</strong></td>
+<td width="400" align="center"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/byop-connect3.png" width="400" alt="Step 3" /><br><strong>Step 3: Authorising…</strong></td>
+<td width="400" align="center"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/byop-connect4.png" width="400" alt="Step 4" /><br><strong>Step 4: Connected!</strong></td>
 </tr>
 </table>
 
 ### Model Picker
 
 <table><tr>
-<td width="400"><img src="screenshots/model-picker.png?raw=true" width="400" alt="Generate Text Settings" /><br><strong>Settings page</strong></td>
-<td width="400"><img src="screenshots/model-picker-selector.png?raw=true" width="400" alt="Model Dropdown" /><br><strong>Model dropdown</strong></td>
+<td width="400"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/model-picker.png" width="400" alt="Generate Text Settings" /><br><strong>Settings page</strong></td>
+<td width="400"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/model-picker-selector.png" width="400" alt="Model Dropdown" /><br><strong>Model dropdown</strong></td>
+</tr></table>
+
+### AI in Action
+
+<table><tr>
+<td width="400"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/generate_text1.png" width="400" alt="Text Generation" /><br><strong>Text generation in TinyMCE</strong></td>
+<td width="400"><img src="https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/raw/main/screenshots/generate_image1.png" width="400" alt="Image Generation" /><br><strong>Image generation result</strong></td>
 </tr></table>
 
 This plugin enables text generation, text summarisation, and image generation through Moodle's native AI subsystem, powered by Pollinations' OpenAI-compatible API. With 60+ models from OpenAI, Anthropic, Google, ByteDance, Meta, Mistral, and more, Pollinations offers some of the most competitive AI pricing available.
@@ -73,7 +80,7 @@ This plugin enables text generation, text summarisation, and image generation th
 1. Clone or download this repository into `ai/provider/pollinations/` in your Moodle directory:
    ```bash
    cd /path/to/moodle/ai/provider/
-   git clone https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations.git pollinations
+   git clone https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations.git pollinations
    ```
 
 2. Visit your Moodle site as an administrator to complete the installation.
@@ -189,8 +196,8 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE) for details.
 - **Pollinations:** [https://pollinations.ai](https://pollinations.ai)
 - **API docs:** [https://gen.pollinations.ai/docs](https://gen.pollinations.ai/docs)
 - **Get an API key:** [https://enter.pollinations.ai](https://enter.pollinations.ai)
-- **Source code:** [https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations)
-- **Issue tracker:** [https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
+- **Source code:** [https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations)
+- **Issue tracker:** [https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/issues](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/issues)
 
 ## Changelog
 
@@ -199,7 +206,6 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE) for details.
 - **Added:** Honours `Retry-After` header for rate-limited responses
 - **Added:** User-friendly error messages for common HTTP errors (401, 402, 403, 429, 400, 5xx)
 - **Added:** Request timeouts (60s request, 15s connect) to prevent infinite hangs
-- **Added:** Theme compatibility shim (`theme_compat.js`) for themes missing `role="main"` DOM element
 - **Changed:** All error messages now use `get_string()` instead of hard-coded English text
 - **Changed:** Maturity set to STABLE for Moodle Plugins Directory submission
 - **Fixed:** Plugin ZIP packaging now uses forward slashes for Linux compatibility
@@ -228,7 +234,7 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE) for details.
 
 ## Documentation
 
-- **Full documentation:** [README on GitHub](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations#readme)
-- **Issue tracker:** [GitHub Issues](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
+- **Full documentation:** [README on GitHub](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations#readme)
+- **Issue tracker:** [GitHub Issues](https://github.com/ChunkyPanda29/moodle-aiprovider-pollinations/issues)
 - **Pollinations API docs:** [https://github.com/pollinations/pollinations](https://github.com/pollinations/pollinations)
 - **Moodle AI subsystem docs:** [https://moodledev.io/docs/4.5/apis/core/ai](https://moodledev.io/docs/4.5/apis/core/ai)
