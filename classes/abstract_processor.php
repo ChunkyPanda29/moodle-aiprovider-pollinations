@@ -185,8 +185,11 @@ abstract class abstract_processor extends process_base {
 
         // Exhausted all retries.
         if ($lasterror !== null) {
-            $lasterror['errormessage'] = get_string('error_retryexhausted', 'aiprovider_pollinations',
-                ['message' => $lasterror['errormessage'], 'attempts' => $attempt]);
+            $lasterror['errormessage'] = get_string(
+                'error_retryexhausted',
+                'aiprovider_pollinations',
+                ['message' => $lasterror['errormessage'], 'attempts' => $attempt],
+            );
             return $lasterror;
         }
 
@@ -258,20 +261,43 @@ abstract class abstract_processor extends process_base {
                 $responsearr['errormessage'] = get_string('error_badrequest', 'aiprovider_pollinations', $msg);
                 break;
             default:
-                if ($status >= 500 && $status < 600) {
-                    $responsearr['errormessage'] = get_string('error_servererror', 'aiprovider_pollinations',
-                        ['status' => $status, 'phrase' => $response->getReasonPhrase()]);
-                } else if (isset($bodyobj->error->message)) {
-                    $responsearr['errormessage'] = $bodyobj->error->message;
-                } else if (json_last_error() === JSON_ERROR_NONE && isset($bodyobj->error)) {
-                    $responsearr['errormessage'] = json_encode($bodyobj->error);
-                } else {
-                    $responsearr['errormessage'] = get_string('error_httpgeneric', 'aiprovider_pollinations',
-                        ['status' => $status, 'phrase' => $response->getReasonPhrase()]);
-                }
+                $responsearr['errormessage'] = $this->get_generic_error_message($status, $response, $bodyobj);
                 break;
         }
 
         return $responsearr;
+    }
+
+    /**
+     * Get a generic error message for non-standard HTTP status codes.
+     *
+     * @param int $status The HTTP status code.
+     * @param ResponseInterface $response The response object.
+     * @param mixed $bodyobj The decoded JSON body (or null).
+     * @return string The error message.
+     */
+    private function get_generic_error_message(
+        int $status,
+        ResponseInterface $response,
+        mixed $bodyobj,
+    ): string {
+        if ($status >= 500 && $status < 600) {
+            return get_string(
+                'error_servererror',
+                'aiprovider_pollinations',
+                ['status' => $status, 'phrase' => $response->getReasonPhrase()],
+            );
+        }
+        if (isset($bodyobj->error->message)) {
+            return $bodyobj->error->message;
+        }
+        if (json_last_error() === JSON_ERROR_NONE && isset($bodyobj->error)) {
+            return json_encode($bodyobj->error);
+        }
+        return get_string(
+            'error_httpgeneric',
+            'aiprovider_pollinations',
+            ['status' => $status, 'phrase' => $response->getReasonPhrase()],
+        );
     }
 }
