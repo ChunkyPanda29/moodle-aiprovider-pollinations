@@ -14,6 +14,30 @@
 
 A Moodle AI provider plugin that integrates [Pollinations.ai](https://pollinations.ai) — the affordable, multi-model AI inference platform — into Moodle 4.5+ (and later).
 
+## Screenshots
+
+### Settings Page
+
+| Not Connected | Connected |
+|---|---|
+| ![Settings - Not Connected](screenshots/settings-page-not-connected.png) | ![Settings - Connected](screenshots/settings-page-connected.png) |
+
+### BYOP Device Flow (Connect to Pollinations)
+
+| Step 1: Click Connect | Step 2: Enter Code |
+|---|---|
+| ![BYOP Step 1](screenshots/byop-connect1.png) | ![BYOP Step 2](screenshots/byop-connect2.png) |
+
+| Step 3: Authorising | Step 4: Connected! |
+|---|---|
+| ![BYOP Step 3](screenshots/byop-connect3.png) | ![BYOP Step 4](screenshots/byop-connect4.png) |
+
+### Model Picker
+
+| Generate Text Settings | Model Dropdown |
+|---|---|
+| ![Model Picker Settings](screenshots/model-picker.png) | ![Model Selector](screenshots/model-picker-selector.png) |
+
 This plugin enables text generation, text summarisation, and image generation through Moodle's native AI subsystem, powered by Pollinations' OpenAI-compatible API. With 60+ models from OpenAI, Anthropic, Google, ByteDance, Meta, Mistral, and more, Pollinations offers some of the most competitive AI pricing available.
 
 ## Features
