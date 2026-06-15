@@ -40,7 +40,6 @@ use GuzzleHttp\Psr7\Request;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class byop extends external_api {
-
     /**
      * Initiate the BYOP device authorisation flow.
      *
