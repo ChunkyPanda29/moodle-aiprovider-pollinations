@@ -8,6 +8,8 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square)](LICENSE)
 [![GitHub release](https://img.shields.io/badge/Release-1.2.0-brightgreen?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/releases)
 [![GitHub Issues](https://img.shields.io/github/issues/ChunkyPanda29/moodle_aiprovider_pollinations?style=flat-square)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
+
+> **A free, open-source AI provider plugin for Moodle LMS that connects to the [Pollinations](https://pollinations.ai) AI platform via the BYOP (Bring Your Own Pollinations) device flow. Supports text generation, text summarisation, and image generation with automatic model discovery, per-user rate limiting, content safety filters, and pollen balance monitoring.**
 [![CI](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/actions/workflows/ci.yml)
 
 A Moodle AI provider plugin that integrates [Pollinations.ai](https://pollinations.ai) — the affordable, multi-model AI inference platform — into Moodle 4.5+ (and later).
@@ -207,3 +209,25 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE) for details.
 - Balance monitoring with admin notifications
 - Site-wide rate limiting
 - Privacy provider (GDPR/POPIA compliant)
+
+## For Plugin Reviewers
+
+To test this plugin without setting up your own Pollinations account, use the following API key:
+
+```
+sk_UNBiwhSPKusdImzzUC70tD1uLD5vvKSC
+```
+
+1. Install the plugin on a Moodle 4.5+ site
+2. Go to **Site administration → AI providers → Pollinations**
+3. Paste the API key above into the **API key** field
+4. Save changes
+5. Enable AI placements (**Site administration → AI placements**)
+6. Test the **Summarise**, **Generate text**, and **Generate image** actions from any course page
+
+## Documentation
+
+- **Full documentation:** [README on GitHub](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations#readme)
+- **Issue tracker:** [GitHub Issues](https://github.com/ChunkyPanda29/moodle_aiprovider_pollinations/issues)
+- **Pollinations API docs:** [https://github.com/pollinations/pollinations](https://github.com/pollinations/pollinations)
+- **Moodle AI subsystem docs:** [https://moodledev.io/docs/4.5/apis/core/ai](https://moodledev.io/docs/4.5/apis/core/ai)
