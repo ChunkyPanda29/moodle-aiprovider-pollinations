@@ -39,7 +39,7 @@ abstract class abstract_processor extends process_base {
     private const RETRY_BASE_DELAY_MS = 1000;
 
     /** @var int Request timeout in seconds. */
-    private const REQUEST_TIMEOUT = 60;
+    protected const REQUEST_TIMEOUT = 60;
 
     /**
      * Get the endpoint URI.
