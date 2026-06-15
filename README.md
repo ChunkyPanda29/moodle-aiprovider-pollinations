@@ -24,15 +24,16 @@ A Moodle AI provider plugin that integrates [Pollinations.ai](https://pollinatio
 
 ### BYOP Device Flow (Connect to Pollinations)
 
-<table><tr><td width="400">
-<img src="screenshots/byop-connect1.png?raw=true" width="400" alt="Step 1: Click Connect" /><br><strong>Step 1:</strong> Click Connect
-</td></tr><tr><td>
-<img src="screenshots/byop-connect2.png?raw=true" width="400" alt="Step 2: Enter Code" /><br><strong>Step 2:</strong> Enter code at enter.pollinations.ai/device
-</td></tr><tr><td>
-<img src="screenshots/byop-connect3.png?raw=true" width="400" alt="Step 3: Authorising" /><br><strong>Step 3:</strong> Authorising…
-</td></tr><tr><td>
-<img src="screenshots/byop-connect4.png?raw=true" width="400" alt="Step 4: Connected" /><br><strong>Step 4:</strong> Connected!
-</td></tr></table>
+<table>
+<tr>
+<td width="400" align="center"><img src="screenshots/byop-connect1.png?raw=true" width="400" alt="Step 1" /><br><strong>Step 1: Click Connect</strong></td>
+<td width="400" align="center"><img src="screenshots/byop-connect2.png?raw=true" width="400" alt="Step 2" /><br><strong>Step 2: Enter code</strong></td>
+</tr>
+<tr>
+<td width="400" align="center"><img src="screenshots/byop-connect3.png?raw=true" width="400" alt="Step 3" /><br><strong>Step 3: Authorising…</strong></td>
+<td width="400" align="center"><img src="screenshots/byop-connect4.png?raw=true" width="400" alt="Step 4" /><br><strong>Step 4: Connected!</strong></td>
+</tr>
+</table>
 
 ### Model Picker
 
