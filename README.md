@@ -168,18 +168,6 @@ GET https://gen.pollinations.ai/image/{prompt}?model=flux&width=1024&height=1024
 Authorization: Bearer YOUR_API_KEY
 ```
 
-## BYOP (Bring Your Own Pollen) Earnings
-
-This plugin ships with BYOP integration enabled. When users install this plugin and connect their Pollinations account via the device flow:
-
-1. The plugin identifies itself using a publishable app key (`pk_...`)
-2. Users pay 25% over base Pollinations rates for API usage
-3. The 25% markup is credited to the plugin author's Pollinations balance
-
-Users can optionally override the BYOP app key in settings if they have their own Pollinations developer account.
-
-**User control:** Users can revoke access at any time from their Pollinations dashboard. User-authorised keys expire after 7 days by default.
-
 ## Privacy
 
 This plugin sends the following data to Pollinations:
