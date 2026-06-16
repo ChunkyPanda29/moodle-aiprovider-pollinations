@@ -43,6 +43,11 @@ final class process_generate_text_test extends \advanced_testcase {
         $this->resetAfterTest();
 
         set_config('apikey', 'sk_testkey123', 'aiprovider_pollinations');
+        // Explicitly reset safety and instruction configs to prevent leakage.
+        set_config('safety_privacy', 0, 'aiprovider_pollinations');
+        set_config('safety_secrets', 0, 'aiprovider_pollinations');
+        set_config('safety_nsfw', 0, 'aiprovider_pollinations');
+        set_config('action_generate_text_systeminstruction', '', 'aiprovider_pollinations');
 
         $this->provider = new provider();
         $context = \context_system::instance();

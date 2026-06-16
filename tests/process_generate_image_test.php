@@ -45,8 +45,10 @@ final class process_generate_image_test extends \advanced_testcase {
             contextid: $context->id,
             userid: $user->id,
             prompttext: 'A cat wearing a graduation cap',
-            aspectratio: 'square',
             quality: 'standard',
+            aspectratio: 'square',
+            numimages: 1,
+            style: 'natural',
         );
 
         $this->processor = new process_generate_image($provider, $action);
