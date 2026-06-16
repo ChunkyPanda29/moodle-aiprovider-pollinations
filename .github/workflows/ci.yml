@@ -92,9 +92,8 @@ jobs:
         run: moodle-plugin-ci phpcpd || true
 
       - name: PHP Mess Detector
-        continue-on-error: true
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpmd
+        run: moodle-plugin-ci phpmd || true
 
       - name: Moodle Code Checker
         if: ${{ !cancelled() }}
@@ -122,12 +121,12 @@ jobs:
 
       - name: PHPUnit tests
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpunit --fail-on-warning || true
+        run: moodle-plugin-ci phpunit --fail-on-warning
 
       - name: Behat features
         id: behat
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci behat --profile chrome || true
+        run: moodle-plugin-ci behat --profile chrome
 
       - name: Upload Behat Faildump
         if: ${{ failure() && steps.behat.outcome == 'failure' }}

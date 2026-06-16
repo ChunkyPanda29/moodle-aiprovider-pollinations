@@ -204,6 +204,13 @@ GNU General Public License v3.0 or later. See [LICENSE](LICENSE) for details.
 
 ## Changelog
 
+### v1.3.0 (2026-06-16)
+- **Added:** Comprehensive PHPUnit test suite (provider, processors, tasks, external API)
+- **Added:** Behat feature tests for admin settings UI (provider configuration, rate limiting, safety, balance)
+- **Changed:** CI now enforces PHPUnit and Behat results — removed `|| true` guards so test failures fail the build
+- **Changed:** PHPMD no longer uses `continue-on-error`
+- **Goal:** Qualifies plugin for Moodle Plugins Directory "Automated testing support" award
+
 ### v1.2.0 (2026-06-15)
 - **Added:** Auto-retry with exponential backoff for transient failures (429, 5xx) — up to 3 attempts with jitter
 - **Added:** Honours `Retry-After` header for rate-limited responses
