@@ -16,9 +16,7 @@
 
 namespace aiprovider_pollinations;
 
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Uri;
 
 /**
  * Unit tests for the abstract processor (via process_generate_text).
@@ -33,6 +31,12 @@ final class process_generate_text_test extends \advanced_testcase {
     /** @var process_generate_text Processor instance under test. */
     private process_generate_text $processor;
 
+    /** @var \core_ai\aiactions\generate_text */
+    private \core_ai\aiactions\generate_text $action;
+
+    /** @var provider */
+    private provider $provider;
+
     #[\Override]
     public function setUp(): void {
         parent::setUp();
@@ -40,17 +44,17 @@ final class process_generate_text_test extends \advanced_testcase {
 
         set_config('apikey', 'sk_testkey123', 'aiprovider_pollinations');
 
-        $provider = new provider();
+        $this->provider = new provider();
         $context = \context_system::instance();
         $user = $this->getDataGenerator()->create_user();
 
-        $action = new \core_ai\aiactions\generate_text($context);
-        $action->set_configuration([
-            'userid' => $user->id,
-            'prompttext' => 'Write a short poem about Moodle.',
-        ]);
+        $this->action = new \core_ai\aiactions\generate_text(
+            contextid: $context->id,
+            userid: $user->id,
+            prompttext: 'Write a short poem about Moodle.',
+        );
 
-        $this->processor = new process_generate_text($provider, $action);
+        $this->processor = new process_generate_text($this->provider, $this->action);
     }
 
     /**
@@ -96,7 +100,6 @@ final class process_generate_text_test extends \advanced_testcase {
      * Test that the request object is built correctly.
      */
     public function test_create_request_object(): void {
-        $provider = new provider();
         $request = $this->call_method($this->processor, 'create_request_object', [
             'userid' => 'hashed_user_123',
         ]);
@@ -116,16 +119,14 @@ final class process_generate_text_test extends \advanced_testcase {
     public function test_create_request_object_with_system_instruction(): void {
         set_config('action_generate_text_systeminstruction', 'You are a helpful assistant.', 'aiprovider_pollinations');
 
-        // Rebuild processor with updated config.
-        $provider = new provider();
         $context = \context_system::instance();
         $user = $this->getDataGenerator()->create_user();
-        $action = new \core_ai\aiactions\generate_text($context);
-        $action->set_configuration([
-            'userid' => $user->id,
-            'prompttext' => 'Hello',
-        ]);
-        $processor = new process_generate_text($provider, $action);
+        $action = new \core_ai\aiactions\generate_text(
+            contextid: $context->id,
+            userid: $user->id,
+            prompttext: 'Hello',
+        );
+        $processor = new process_generate_text($this->provider, $action);
 
         $request = $this->call_method($processor, 'create_request_object', ['userid' => 'hash123']);
         $body = json_decode($request->getBody()->getContents(), true);

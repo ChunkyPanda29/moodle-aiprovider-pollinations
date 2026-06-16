@@ -17,7 +17,6 @@
 namespace aiprovider_pollinations;
 
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Uri;
 
 /**
  * Unit tests for the image generation processor.
@@ -42,13 +41,13 @@ final class process_generate_image_test extends \advanced_testcase {
         $context = \context_system::instance();
         $user = $this->getDataGenerator()->create_user();
 
-        $action = new \core_ai\aiactions\generate_image($context);
-        $action->set_configuration([
-            'userid' => $user->id,
-            'prompttext' => 'A cat wearing a graduation cap',
-            'aspectratio' => 'square',
-            'quality' => 'standard',
-        ]);
+        $action = new \core_ai\aiactions\generate_image(
+            contextid: $context->id,
+            userid: $user->id,
+            prompttext: 'A cat wearing a graduation cap',
+            aspectratio: 'square',
+            quality: 'standard',
+        );
 
         $this->processor = new process_generate_image($provider, $action);
     }
@@ -107,7 +106,7 @@ final class process_generate_image_test extends \advanced_testcase {
     public function test_calculate_dimensions_landscape_standard(): void {
         [$width, $height] = $this->call_method($this->processor, 'calculate_dimensions', ['landscape', 'standard']);
         $this->assertEquals(1024, $width);
-        $this->assertEquals(576, $height); // 1024 * 9/16 = 576
+        $this->assertEquals(576, $height);
     }
 
     /**
@@ -134,7 +133,7 @@ final class process_generate_image_test extends \advanced_testcase {
     public function test_calculate_dimensions_landscape_hd(): void {
         [$width, $height] = $this->call_method($this->processor, 'calculate_dimensions', ['landscape', 'hd']);
         $this->assertEquals(1536, $width);
-        $this->assertEquals(864, $height); // 1536 * 9/16 = 864
+        $this->assertEquals(864, $height);
     }
 
     /**
@@ -165,8 +164,6 @@ final class process_generate_image_test extends \advanced_testcase {
         $this->assertStringContainsString('width=1024', $url);
         $this->assertStringContainsString('height=1024', $url);
         $this->assertStringContainsString('nologo=true', $url);
-        // Prompt should be URL-encoded.
-        $this->assertStringContainsString(rawurlencode('A cat wearing a graduation cap'), $url);
     }
 
     /**

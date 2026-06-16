@@ -29,13 +29,15 @@ final class byop_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();
         $this->resetAfterTest();
+        $this->setAdminUser();
+        // External API functions require sesskey.
+        $_POST['sesskey'] = sesskey();
     }
 
     /**
      * Test that disconnect clears the API key.
      */
     public function test_disconnect(): void {
-        $this->setAdminUser();
         set_config('apikey', 'sk_test123', 'aiprovider_pollinations');
 
         $result = byop::disconnect();
@@ -47,7 +49,6 @@ final class byop_test extends \advanced_testcase {
      * Test get_status when not connected.
      */
     public function test_get_status_disconnected(): void {
-        $this->setAdminUser();
         $result = byop::get_status();
         $this->assertFalse($result['connected']);
     }
@@ -56,7 +57,6 @@ final class byop_test extends \advanced_testcase {
      * Test get_status when connected.
      */
     public function test_get_status_connected(): void {
-        $this->setAdminUser();
         set_config('apikey', 'sk_test123', 'aiprovider_pollinations');
         $result = byop::get_status();
         $this->assertTrue($result['connected']);
@@ -66,11 +66,7 @@ final class byop_test extends \advanced_testcase {
      * Test init_device_flow returns a result array.
      */
     public function test_init_device_flow_returns_array(): void {
-        $this->setAdminUser();
         $result = byop::init_device_flow();
-
-        // The result should have a 'success' key.
-        // It may fail if Pollinations API is unreachable in CI.
         $this->assertArrayHasKey('success', $result);
     }
 

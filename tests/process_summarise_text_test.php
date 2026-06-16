@@ -39,11 +39,11 @@ final class process_summarise_text_test extends \advanced_testcase {
         $context = \context_system::instance();
         $user = $this->getDataGenerator()->create_user();
 
-        $action = new \core_ai\aiactions\summarise_text($context);
-        $action->set_configuration([
-            'userid' => $user->id,
-            'prompttext' => 'This is a long piece of text that should be summarised.',
-        ]);
+        $action = new \core_ai\aiactions\summarise_text(
+            contextid: $context->id,
+            userid: $user->id,
+            prompttext: 'This is a long piece of text that should be summarised.',
+        );
 
         $this->processor = new process_summarise_text($provider, $action);
     }

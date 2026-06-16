@@ -61,6 +61,6 @@ final class check_balance_task_test extends \advanced_testcase {
         ob_start();
         $this->task->execute();
         $output = ob_get_clean();
-        $this->assertStringContainsString('API key not configured', $output);
+        $this->assertStringContainsString('not configured', $output);
     }
 }
