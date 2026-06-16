@@ -39,7 +39,7 @@ final class provider_test extends \advanced_testcase {
      * Test that the provider supports the expected AI actions.
      */
     public function test_get_action_list(): void {
-        $actions = provider::get_action_list();
+        $actions = $this->provider->get_action_list();
         $this->assertContains(\core_ai\aiactions\generate_text::class, $actions);
         $this->assertContains(\core_ai\aiactions\summarise_text::class, $actions);
         $this->assertContains(\core_ai\aiactions\generate_image::class, $actions);

@@ -79,7 +79,7 @@ class provider extends \core_ai\provider {
      *
      * @return array An array of action class names.
      */
-    public static function get_action_list(): array {
+    public function get_action_list(): array {
         return [
             \core_ai\aiactions\generate_text::class,
             \core_ai\aiactions\summarise_text::class,
